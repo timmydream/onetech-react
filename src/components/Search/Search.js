@@ -1,6 +1,5 @@
 import React from "react";
 import { Input } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
 
 const Search = ({ onSearchChange }) => {
     const [term, setTerm] = React.useState("");
@@ -15,8 +14,7 @@ const Search = ({ onSearchChange }) => {
             <Input
                 placeholder="Search"
                 onChange={onTermChange}
-                value={term}
-                suffix={<SearchOutlined />}
+                className="search-panel"
             />
         </>
     );
