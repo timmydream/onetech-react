@@ -21,8 +21,8 @@ const App = ({ items, toggle }: { items: object[], toggle: any }) => {
                         <Span
                             complete={item.complete}
                             onClick={() => {
-                                toggle(index);
-                                console.log(index);
+                                toggle(item.id);
+                                console.log(item.id);
                             }}
                         >
                             {item.text}
