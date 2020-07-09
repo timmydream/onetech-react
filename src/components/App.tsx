@@ -1,30 +1,56 @@
 import React from "react";
+import { connect } from "react-redux";
 import GlobalStyle from "../styles/GlobalStyle";
-import { connect } from 'react-redux';
-import Wrapper from "../styles/Wrapper";
-import Button from "../styles/Button";
-import { store } from "../store/store";
-import { inc, dec } from "../store/actions";
+import Span from "../styles/Span";
+import List from "../styles/List";
+import { filters } from "../store/filters";
+import Header from "./Header";
+import * as actions from "../store/actions";
 
-const App = (props: any) => {
+const App = ({ items, toggle }: { items: object[], toggle: any }) => {
+    console.log(items);
     return (
-        <Wrapper>
-            <GlobalStyle />           
-            <h2 id="counter">{props.counter}</h2>  
-            <Button onClick={() => store.dispatch({type: 'INC'})}>
-                INC
-            </Button>
-            <Button onClick={() => store.dispatch({type: 'DEC'})}>
-                DEC
-            </Button>
-        </Wrapper>
+        <>
+            <GlobalStyle />
+            <List
+                header={<Header />}
+                bordered
+                dataSource={items}
+                renderItem={(item: any, index: number) => (
+                    <List.Item>
+                        <Span
+                            complete={item.complete}
+                            onClick={() => {
+                                toggle(index);
+                                console.log(index);
+                            }}
+                        >
+                            {item.text}
+                        </Span>
+                    </List.Item>
+                )}
+            />
+        </>
     );
+};
+
+const filtering = (items: any, filter: any) => {
+    switch (filter) {
+        case filters.ALL_ITEMS:
+            return items;
+        case filters.ACTIVE_ITEMS:
+            return items.filter((item: any) => !item.complete);
+        case filters.COMPLETE_ITEMS:
+            return items.filter((item: any) => item.complete);
+        default:
+            return items;
+    }
 };
 
 const mapStateToProps = (state: any) => {
     return {
-        counter: state
+        items: filtering(state.list, state.visibility),
     };
 };
-  
-export default connect(mapStateToProps, { inc, dec })(App);
+
+export default connect(mapStateToProps, actions)(App);
