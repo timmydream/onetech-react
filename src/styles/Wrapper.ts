@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
-const Wrapper = styled.div`
-    margin: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+export const Wrapper = styled.div`
+    display: grid;
+    width: 90%;
+    margin: 3% auto auto auto;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
 `;
-
-export default Wrapper;
